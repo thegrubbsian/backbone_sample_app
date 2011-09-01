@@ -26,6 +26,7 @@ Views.Calendar = Backbone.View.extend({
 
 Views.VolunteerList = Backbone.View.extend({
   el: $("#volunteers"),
+  volunteerViews: [],
   initialize: function() {
     this._render();
     this._bindCollectionEvents();
@@ -33,6 +34,10 @@ Views.VolunteerList = Backbone.View.extend({
   add: function(volunteer) {
     var view = new Views.Volunteer({ model: volunteer });
     view.render(this.el);
+    this.volunteerViews.push(view);
+  },
+  remove: function(id) {
+    
   },
   _render: function() {
     var me = this;
@@ -41,6 +46,7 @@ Views.VolunteerList = Backbone.View.extend({
   _bindCollectionEvents: function() {
     var me = this;
     this.collection.bind("add", function(volunteer) { me.add(volunteer); });
+    this.collection.bind("remove", function(volunteer) { me.remove(volunteer.id); });
   }
 });
 
