@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scheduler</title>
+    <script type="text/javascript" src="/lib/javascripts/loader.js"></script>
+    <script type="text/javascript">
+      Loader.include({
+        javascripts: "common, scheduler",
+        stylesheets: "common, scheduler",
+        templates: "scheduler"
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container" class="container_12 clearfix">
+      <div id="header" class="grid_12 alpha omega">
+        <h1>Scheduler</h1>
+      </div>
+      <div id="calendar" class="grid_8 alpha"></div>
+      <div id="side_rail" class="grid_4 omega">
+        <h2>Volunteers</h2>
+        <div id="volunteers"></div>
+      </div>
+    </div>
+  </body>
+</html>

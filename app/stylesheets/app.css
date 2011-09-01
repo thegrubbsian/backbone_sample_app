@@ -1,0 +1,23 @@
+#container {
+  margin: 30px auto;
+}
+
+#calendar {
+  height: 400px;
+}
+
+#volunteers .volunteer {
+  padding: 4px 7px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 8px;
+  background-color: #f0f0f0;
+}
+
+  #volunteers .volunteer .name {
+    font-weight: bold;
+  }
+
+  #volunteers .volunteer .actions {
+    float: right;
+    cursor: pointer;
+  }
