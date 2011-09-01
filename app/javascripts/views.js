@@ -4,6 +4,7 @@ Views.Calendar = Backbone.View.extend({
   el: $("#calendar"),
   initialize: function() {
     this.render();
+    this._bindCollectionEvents();
   },
   render: function() {
     var me = this;
@@ -21,6 +22,9 @@ Views.Calendar = Backbone.View.extend({
         callback(events);
       }
     });
+  },
+  _bindCollectionEvents: function() {
+    
   }
 });
 
@@ -31,42 +35,61 @@ Views.VolunteerList = Backbone.View.extend({
     this._render();
     this._bindCollectionEvents();
   },
-  add: function(volunteer) {
+  _render: function() {
+    var me = this;
+    this.collection.each(function(volunteer) { me._add(volunteer); });
+  },
+  _add: function(volunteer) {
     var view = new Views.Volunteer({ model: volunteer });
     view.render(this.el);
     this.volunteerViews.push(view);
   },
-  remove: function(id) {
-    
-  },
-  _render: function() {
-    var me = this;
-    this.collection.each(function(volunteer) { me.add(volunteer); });
-  },
   _bindCollectionEvents: function() {
     var me = this;
-    this.collection.bind("add", function(volunteer) { me.add(volunteer); });
-    this.collection.bind("remove", function(volunteer) { me.remove(volunteer.id); });
+    this.collection.bind("add", function(volunteer) { me._add(volunteer); });
   }
 });
 
 Views.Volunteer = Backbone.View.extend({
   events: function() {
     return {
-      "click .actions a[data-action='edit']": "edit",
-      "click .actions a[data-action='delete']": "delete"
+      "click .actions a[data-action='edit']": "_edit",
+      "click .actions a[data-action='delete']": "_delete",
+      "click .actions a[data-action='save']": "_save",
+      "click .actions a[data-action='cancel']": "_cancel"
     };
   },
+  initialize: function() {
+    this._bindModelEvents();
+  },
   render: function(container) {
-    var html = _.template(Templates.volunteer, this.model.attributes);
-    this.el = $(html);
+    this.el = this._generateHtml(Templates.volunteer);
     this.delegateEvents();
     container.append(this.el);
   },
-  edit: function() {
-    alert("clicked edit");
+  _edit: function() {
+    this.el.replaceWith(this._generateHtml(Templates.volunteerEdit));
   },
-  delete: function() {
-    alert("clicked delete");
+  _delete: function() {
+    var me = this;
+    if (confirm("Really, you want to delete this volunteer?")) {
+      me.model.destroy();
+      me.el.fadeOut(400, function() { me.remove(); });
+    }
+  },
+  _save: function() {
+
+  },
+  _cancel: function() {
+
+  },
+  _bindModelEvents: function() {
+    var me = this;
+    this.model.bind("change", function() {
+      me.el.replaceWith(me._generateHtml(Templates.volunteer));
+    });
+  },
+  _generateHtml: function(template) {
+    return $(_.template(template, this.model.attributes));
   }
 });

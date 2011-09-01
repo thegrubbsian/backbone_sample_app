@@ -30,7 +30,8 @@ var _manifest = {
   },
   templates: {
     scheduler: [
-      { name: "volunteer", path: "/templates/volunteer.jst" }
+      { name: "volunteer", path: "/templates/volunteer.jst" },
+      { name: "volunteerEdit", path: "/templates/volunteer_edit.jst" }
     ]
   }
 };

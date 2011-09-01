@@ -50,19 +50,23 @@ Loader = (function() {
   function loadTemplates(groups) {
     for (var i = 0; i < groups.length; i++) {
       var items = _manifest["templates"][groups[i]];
-      for (var j = 0; j < items.length; j++) {
-        var item = items[j];
-        var xhr = new XMLHttpRequest();
-        xhr.overrideMimeType("text/json");
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4) {
-            window.Templates[item.name] = xhr.responseText;
-          }
-        }
-        xhr.open("GET", item.path, true);
-        xhr.send(null);
+      while (items.length > 0) {
+        var item = items.pop();
+        loadTemplate(item);
       }
     }
+  }
+
+  function loadTemplate(item, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.overrideMimeType("text/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        window.Templates[item.name] = xhr.responseText;
+      }
+    }
+    xhr.open("GET", item.path, true);
+    xhr.send(null);
   }
 
   function writeTag(type, src, callback) {
