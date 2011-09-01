@@ -35,6 +35,15 @@ Views.VolunteerList = Backbone.View.extend({
     this._render();
     this._bindCollectionEvents();
   },
+  showNewVolunteer: function() {
+    this.collection.add(new Models.Volunteer());
+  },
+  showEditVolunteer: function(id) {
+    var volunteerView = _.detect(this.volunteerViews, function(view) {
+      return view.model.id == id;
+    });
+    volunteerView.edit();
+  },
   _render: function() {
     var me = this;
     this.collection.each(function(volunteer) { me._add(volunteer); });
@@ -53,7 +62,6 @@ Views.VolunteerList = Backbone.View.extend({
 Views.Volunteer = Backbone.View.extend({
   events: function() {
     return {
-      "click .actions a[data-action='edit']": "_edit",
       "click .actions a[data-action='delete']": "_delete",
       "click .actions a[data-action='save']": "_save",
       "click .actions a[data-action='cancel']": "_cancel"
@@ -63,10 +71,15 @@ Views.Volunteer = Backbone.View.extend({
     this._bindModelEvents();
   },
   render: function(container) {
-    this._renderTemplate(Templates.volunteer);
-    container.append(this.el);
+    if (this.model.isNew()) {
+      this._renderTemplate(Templates.volunteerEdit);
+      container.prepend(this.el);
+    } else {
+      this._renderTemplate(Templates.volunteer);
+      container.append(this.el);
+    }
   },
-  _edit: function() {
+  edit: function() {
     this._renderTemplate(Templates.volunteerEdit);
   },
   _delete: function() {
@@ -77,14 +90,23 @@ Views.Volunteer = Backbone.View.extend({
     }
   },
   _save: function() {
-    
+    var me = this;
+    this.model.updateFromForm($("input", this.el), function(model) {
+      this.model = model;
+      me._renderTemplate(Templates.volunteer);
+    });
   },
   _cancel: function() {
+    if (this.model.isNew()) {
+      this.model.destroy();
+      this.remove();
+    }
     this._renderTemplate(Templates.volunteer);
   },
   _bindModelEvents: function() {
     var me = this;
     this.model.bind("change", function() {
+      if (me.model.isNew()) { return; }
       me._renderTemplate(Templates.volunteer);
     });
   },

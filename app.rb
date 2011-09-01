@@ -34,7 +34,7 @@ end
 
 before do
   content_type :json
-  expires 1, :public, :must_revalidate
+  expires -1, :public, :must_revalidate
 end
 
 # returns any HTML page in /app

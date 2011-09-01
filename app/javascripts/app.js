@@ -1,27 +1,30 @@
 var App = {
   initialize: function() {
     this.configureFramework();
-    var router = new Router();
     this.createCollections();
-    this.loadAndRenderData();
+    this.loadAndRenderData(function() {
+      var router = new Router();
+      Backbone.history.start();
+    });
   },
   configureFramework: function() {
     _.templateSettings = { interpolate : /\{\{(.+?)\}\}/g };
     Backbone.emulateJSON = true;
   },
   createCollections: function() {
-    App.EventsCollection = new Collections.Events();
-    App.VolunteersCollection = new Collections.Volunteers();
+    App.eventsCollection = new Collections.Events();
+    App.volunteersCollection = new Collections.Volunteers();
   },
-  loadAndRenderData: function() {
-    App.EventsCollection.fetch({
+  loadAndRenderData: function(callback) {
+    App.eventsCollection.fetch({
       success: function(collection) {
-        App.CalendarView = new Views.Calendar({ collection: collection });
-      }
-    });
-    App.VolunteersCollection.fetch({
-      success: function(collection) {
-        App.VolunteerListView = new Views.VolunteerList({ collection: collection });
+        App.calendarView = new Views.Calendar({ collection: collection });
+        App.volunteersCollection.fetch({
+          success: function(collection) {
+            App.volunteerListView = new Views.VolunteerList({ collection: collection });
+            callback();
+          }
+        });
       }
     });
   }

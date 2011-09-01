@@ -1,3 +1,7 @@
+a {
+  cursor: pointer;
+}
+
 #container {
   margin: 30px auto;
 }
@@ -24,5 +28,9 @@
 
   #volunteers .volunteer .actions {
     float: right;
-    cursor: pointer;
   }
+
+#side_rail a.new_volunteer {
+  float: right;
+  margin-top: 9px;
+}
