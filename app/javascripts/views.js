@@ -63,12 +63,11 @@ Views.Volunteer = Backbone.View.extend({
     this._bindModelEvents();
   },
   render: function(container) {
-    this.el = this._generateHtml(Templates.volunteer);
-    this.delegateEvents();
+    this._renderTemplate(Templates.volunteer);
     container.append(this.el);
   },
   _edit: function() {
-    this.el.replaceWith(this._generateHtml(Templates.volunteerEdit));
+    this._renderTemplate(Templates.volunteerEdit);
   },
   _delete: function() {
     var me = this;
@@ -78,18 +77,21 @@ Views.Volunteer = Backbone.View.extend({
     }
   },
   _save: function() {
-
+    
   },
   _cancel: function() {
-
+    this._renderTemplate(Templates.volunteer);
   },
   _bindModelEvents: function() {
     var me = this;
     this.model.bind("change", function() {
-      me.el.replaceWith(me._generateHtml(Templates.volunteer));
+      me._renderTemplate(Templates.volunteer);
     });
   },
-  _generateHtml: function(template) {
-    return $(_.template(template, this.model.attributes));
+  _renderTemplate: function(template) {
+    var newEl = $(_.template(template, this.model.attributes));
+    if (this.el.replaceWith) { this.el.replaceWith(newEl); }
+    this.el = newEl;
+    this.delegateEvents();
   }
 });
