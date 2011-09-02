@@ -7,7 +7,8 @@ Models.Volunteer = Backbone.Model.extend({
   defaults: {
     "lastName": " ",
     "firstName": " ",
-    "email": " "
+    "email": " ",
+    "volunteerCount": 0
   },
   updateFromForm: function(fields, callback) {
     var attrs = {};

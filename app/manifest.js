@@ -10,7 +10,10 @@ var _manifest = {
       "javascripts/fullcalendar.js",
       "javascripts/models.js",
       "javascripts/collections.js",
-      "javascripts/views.js",
+      "javascripts/views/calendar.js",
+      "javascripts/views/volunteer_list.js",
+      "javascripts/views/volunteer.js",
+      "javascripts/views/event.js",
       "javascripts/router.js",
       "javascripts/app.js"
     ]
@@ -31,7 +34,8 @@ var _manifest = {
   templates: {
     scheduler: [
       { name: "volunteer", path: "/templates/volunteer.jst" },
-      { name: "volunteerEdit", path: "/templates/volunteer_edit.jst" }
+      { name: "volunteerEdit", path: "/templates/volunteer_edit.jst" },
+      { name: "event", path: "/templates/event.jst" }
     ]
   }
 };

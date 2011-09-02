@@ -7,5 +7,8 @@ Collections.Events = Backbone.Collection.extend({
 
 Collections.Volunteers = Backbone.Collection.extend({
   url: "/volunteer",
-  model: Models.Volunteer
+  model: Models.Volunteer,
+  comparator: function(volunteer) {
+    return volunteer.get("lastName") + volunteer.get("firstName");
+  }
 });
