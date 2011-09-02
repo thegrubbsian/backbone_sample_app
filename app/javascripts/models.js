@@ -1,6 +1,25 @@
 var Models = {};
 
 Models.Event = Backbone.Model.extend({
+  defaults: {
+    title: " ",
+    start: new Date(),
+    end: new Date(),
+    volunteerIds: []
+  },
+  initialize: function() {
+    var me = this;
+    this.bind("change:volunteerIds", function() { me.updateVolunteerCount(); });
+  },
+  updateVolunteerCount: function() {
+    var me = this;
+    App.volunteersCollection.each(function(volunteer) {
+      var count = 0;
+      if (_.include(me.get("volunteerIds"), volunteer.id)) { count++; }
+      volunteer.set({ eventCount: count });
+      volunteer.save();
+    });
+  }
 });
 
 Models.Volunteer = Backbone.Model.extend({
@@ -8,7 +27,7 @@ Models.Volunteer = Backbone.Model.extend({
     "lastName": " ",
     "firstName": " ",
     "email": " ",
-    "volunteerCount": 0
+    "eventCount": 0
   },
   updateFromForm: function(fields, callback) {
     var attrs = {};
@@ -18,5 +37,8 @@ Models.Volunteer = Backbone.Model.extend({
     });
     this.set(attrs);
     this.save(null, { success: function(model) { callback(model); } });
+  },
+  fullName: function() {
+    return this.get("lastName") + ", " + this.get("firstName");
   }
 });

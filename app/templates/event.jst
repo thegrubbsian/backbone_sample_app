@@ -1,14 +1,23 @@
 <div class="event">
   <div class="field">
     <label>Title</label>
-    <input type="text" name="title" value="{{title}}" />
+    <input type="text" name="title" value="{{event.title}}" />
   </div>
   <div class="field">
     <label>Start Date</label>
-    <input type="text" name="start" value="{{start}}" />
+    <input type="text" name="start" value="{{event.start}}" />
   </div>
   <div class="field">
     <label>Start Date</label>
-    <input type="text" name="end" value="{{end}}" />
+    <input type="text" name="end" value="{{event.end}}" />
+  </div>
+  <div class="field">
+    <label>Volunteers</label>
+    {{for (var i = 0; i < volunteers.length; i++) {}}
+      <div class="field">
+        <input type="checkbox" name="volunteers" value="{{volunteers[i].id}} />
+        <label>{{volunteers[i].fullName()}}</label>
+      </div>
+    {{}}}
   </div>
 </div>
