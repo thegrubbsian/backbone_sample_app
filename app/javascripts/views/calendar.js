@@ -3,7 +3,6 @@ Views.Calendar = Backbone.View.extend({
   initialize: function() {
     this.render();
     this._bindCollectionEvents();
-    this.editView = new Views.CalendarEditView();
   },
   render: function() {
     var me = this;
@@ -22,7 +21,7 @@ Views.Calendar = Backbone.View.extend({
       },
       eventClick: function(evt, e, view) {
         var event = me.collection.get(evt.id);
-        me.editView.show(event);
+        App.router.navigate("/event/edit/" + evt.id, true);
       }
     });
   },

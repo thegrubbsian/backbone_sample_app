@@ -21,7 +21,7 @@ a {
 
 #event_detail {
   position: absolute;
-  top: 200px;
+  top: 170px;
   left: 100px;
   width: 410px;
   height: 200px;
@@ -45,9 +45,9 @@ a {
     font-weight: bold;
   }
 
-  #volunteers .volunteer .actions {
-    float: right;
-  }
+.actions {
+  float: right;
+}
 
 #side_rail a.new_volunteer {
   float: right;

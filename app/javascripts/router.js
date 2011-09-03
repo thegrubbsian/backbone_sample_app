@@ -8,6 +8,7 @@ var Router = Backbone.Router.extend({
   },
   resetViews: function() {
     App.volunteerListView.resetVolunteerViews();
+    App.calendarEditView.hide();
   },
   newVolunteer: function() {
     App.volunteersCollection.add(new Models.Volunteer());
@@ -19,6 +20,6 @@ var Router = Backbone.Router.extend({
     App.eventsCollection.add(new Models.Event());
   },
   editEvent: function(id) {
-    App.calendarView.showEditEvent(id);
+    App.calendarEditView.show(id);
   }
 });
