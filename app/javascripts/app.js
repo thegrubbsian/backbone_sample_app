@@ -8,7 +8,6 @@ var App = {
     });
   },
   configureFramework: function() {
-    _.templateSettings = { interpolate : /\{\{(.+?)\}\}/g };
     Backbone.emulateJSON = true;
   },
   createCollections: function() {

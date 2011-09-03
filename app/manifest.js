@@ -10,10 +10,10 @@ var _manifest = {
       "javascripts/fullcalendar.js",
       "javascripts/models.js",
       "javascripts/collections.js",
+      "javascripts/views/calendar_edit.js",
       "javascripts/views/calendar.js",
       "javascripts/views/volunteer_list.js",
       "javascripts/views/volunteer.js",
-      "javascripts/views/event.js",
       "javascripts/router.js",
       "javascripts/app.js"
     ]

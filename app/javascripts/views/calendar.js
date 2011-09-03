@@ -1,10 +1,9 @@
-var Views = {};
-
 Views.Calendar = Backbone.View.extend({
   el: $("#calendar"),
   initialize: function() {
     this.render();
     this._bindCollectionEvents();
+    this.editView = new Views.CalendarEditView();
   },
   render: function() {
     var me = this;
@@ -21,13 +20,11 @@ Views.Calendar = Backbone.View.extend({
         });
         callback(events);
       },
-      eventClick: function(event, e, view) {
-        me.showEditEvent(event.id);
+      eventClick: function(evt, e, view) {
+        var event = me.collection.get(evt.id);
+        me.editView.show(event);
       }
     });
-  },
-  showEditEvent: function(id) {
-    
   },
   _bindCollectionEvents: function() {
     var me = this;
