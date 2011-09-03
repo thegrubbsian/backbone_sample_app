@@ -13,12 +13,13 @@
   <label>Start Date</label>
   <input type="text" name="end" value="<%= event.end %>" />
 </div>
-<div class="field">
+<div class="volunteers clearfix">
   <label>Volunteers</label>
-  <% for (var i = 0; i < volunteers.length; i++) { %>
-    <div class="field">
-      <input type="checkbox" name="volunteers" value="<%= volunteers[i].id %>" />
-      <label><%= volunteers[i].fullName() %></label>
-    </div>
-  <% } %>
+  <% volunteers.each(function(volunteer) {
+    var checked = _.include(event.volunteerIds, volunteer.id); %>
+  <div class="field check clearfix">
+    <input type="checkbox" name="volunteers" value="<%= volunteer.id %>" <%= checked ? 'checked' : '' %> />
+    <label><%= volunteer.fullName() %></label>
+  </div>
+  <% }); %>
 </div>

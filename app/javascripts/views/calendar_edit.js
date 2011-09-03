@@ -18,7 +18,7 @@ Views.CalendarEditView = Backbone.View.extend({
   _render: function() {
     var html = _.template(Templates.event, {
       event: this.model.attributes,
-      volunteers: []
+      volunteers: App.volunteersCollection
     });
     this.el.html(html);
   },
