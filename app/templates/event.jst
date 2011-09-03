@@ -16,9 +16,9 @@
 <div class="volunteers clearfix">
   <label>Volunteers</label>
   <% volunteers.each(function(volunteer) {
-    var checked = _.include(event.volunteerIds, volunteer.id); %>
+    var checked = _.include(event.volunteerIds, volunteer.id.toString()); %>
   <div class="field check clearfix">
-    <input type="checkbox" name="volunteers" value="<%= volunteer.id %>" <%= checked ? 'checked' : '' %> />
+    <input type="checkbox" name="volunteerIds" value="<%= volunteer.id %>" <%= checked ? 'checked' : '' %> />
     <label><%= volunteer.fullName() %></label>
   </div>
   <% }); %>

@@ -23,7 +23,11 @@ Views.CalendarEditView = Backbone.View.extend({
     this.el.html(html);
   },
   _save: function() {
-
+    var me = this;
+    this.model.updateFromForm($("input", this.el), function(model) {
+      model.updateVolunteerCount();
+      me.hide();
+    });
   },
   _cancel: function() {
     this.hide();

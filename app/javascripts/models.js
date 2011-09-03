@@ -1,5 +1,21 @@
 var Models = {};
 
+Backbone.Model.prototype.updateFromForm = function(fields, callback) {
+  var attrs = {};
+  _.each(fields, function(el) {
+    var field = $(el);
+    var name = field.attr("name");
+    if (field.is("[type='checkbox']")) {
+      if (!attrs[name]) { attrs[name] = []; }
+      if (field.is(":checked")) { attrs[name].push(field.val()); }
+    } else {
+      attrs[name] = field.val();
+    }
+  });
+  this.set(attrs);
+  this.save(null, { success: function(model) { callback(model); } });
+};
+
 Models.Event = Backbone.Model.extend({
   defaults: {
     title: " ",
@@ -15,7 +31,7 @@ Models.Event = Backbone.Model.extend({
     var me = this;
     App.volunteersCollection.each(function(volunteer) {
       var count = 0;
-      if (_.include(me.get("volunteerIds"), volunteer.id)) { count++; }
+      if (_.include(me.get("volunteerIds"), volunteer.id.toString())) { count++; }
       volunteer.set({ eventCount: count });
       volunteer.save();
     });
@@ -28,15 +44,6 @@ Models.Volunteer = Backbone.Model.extend({
     "firstName": " ",
     "email": " ",
     "eventCount": 0
-  },
-  updateFromForm: function(fields, callback) {
-    var attrs = {};
-    _.each(fields, function(el) {
-      var field = $(el);
-      attrs[field.attr("name")] = field.val();
-    });
-    this.set(attrs);
-    this.save(null, { success: function(model) { callback(model); } });
   },
   fullName: function() {
     return this.get("lastName") + ", " + this.get("firstName");

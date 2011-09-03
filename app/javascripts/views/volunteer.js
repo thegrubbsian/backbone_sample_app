@@ -40,6 +40,7 @@ Views.Volunteer = Backbone.View.extend({
     this.model.updateFromForm($("input", this.el), function(model) {
       this.model = model;
       me._renderTemplate(Templates.volunteer);
+      App.router.navigate("/", true);
     });
   },
   _bindModelEvents: function() {
