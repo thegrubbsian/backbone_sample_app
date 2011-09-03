@@ -3,7 +3,7 @@ Views.Volunteer = Backbone.View.extend({
     return {
       "click .actions a[data-action='delete']": "_delete",
       "click .actions a[data-action='save']": "_save",
-      "click .actions a[data-action='cancel']": "_cancel"
+      "click .actions a[data-action='cancel']": "cancel"
     };
   },
   initialize: function() {
@@ -21,6 +21,13 @@ Views.Volunteer = Backbone.View.extend({
   edit: function() {
     this._renderTemplate(Templates.volunteerEdit);
   },
+  cancel: function() {
+    if (this.model.isNew()) {
+      this.model.destroy();
+      this.remove();
+    }
+    this._renderTemplate(Templates.volunteer);
+  },
   _delete: function() {
     var me = this;
     if (confirm("Really, you want to delete this volunteer?")) {
@@ -34,13 +41,6 @@ Views.Volunteer = Backbone.View.extend({
       this.model = model;
       me._renderTemplate(Templates.volunteer);
     });
-  },
-  _cancel: function() {
-    if (this.model.isNew()) {
-      this.model.destroy();
-      this.remove();
-    }
-    this._renderTemplate(Templates.volunteer);
   },
   _bindModelEvents: function() {
     var me = this;

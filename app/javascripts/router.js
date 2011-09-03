@@ -1,9 +1,13 @@
 var Router = Backbone.Router.extend({
   routes: {
+    "/": "resetViews",
     "/volunteer/new": "newVolunteer",
     "/volunteer/edit/:id": "editVolunteer",
     "/event/new": "newEvent",
     "/event/edit/:id": "editEvent"
+  },
+  resetViews: function() {
+    App.volunteerListView.resetVolunteerViews();
   },
   newVolunteer: function() {
     App.volunteersCollection.add(new Models.Volunteer());

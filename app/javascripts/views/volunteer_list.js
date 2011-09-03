@@ -11,6 +11,9 @@ Views.VolunteerList = Backbone.View.extend({
     });
     volunteerView.edit();
   },
+  resetVolunteerViews: function() {
+    _.each(this.volunteerViews, function(view) { view.cancel(); });
+  },
   _render: function() {
     var me = this;
     this.collection.each(function(volunteer) { me._add(volunteer); });
