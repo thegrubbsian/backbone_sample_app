@@ -33,6 +33,9 @@ Views.CalendarEditView = Backbone.View.extend({
     this.hide();
   },
   _delete: function() {
-
+    if (confirm("Really, you want to delete this event?")) {
+      me.hide();
+      me.model.destroy();
+    }
   }
 });

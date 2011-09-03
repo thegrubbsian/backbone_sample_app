@@ -29,10 +29,9 @@ Views.Volunteer = Backbone.View.extend({
     this._renderTemplate(Templates.volunteer);
   },
   _delete: function() {
-    var me = this;
     if (confirm("Really, you want to delete this volunteer?")) {
-      me.model.destroy();
-      me.el.fadeOut(400, function() { me.remove(); });
+      this.model.destroy();
+      this.el.fadeOut(400, function() { me.remove(); });
     }
   },
   _save: function() {
